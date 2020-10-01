@@ -22,6 +22,10 @@ class User(AbstractUser, TimeStampMixin):
 
 class PatientHistory(TimeStampMixin):
     glucose_level = models.FloatField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} {}".format(self.user.first_name, self.user.last_name)
 
 
 class Profile(models.Model):
@@ -29,5 +33,15 @@ class Profile(models.Model):
     address = models.CharField(max_length=250, null=True,)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     
+    def __str__(self):
+        return "{} {}".format(self.user.first_name, self.user.last_name)
 
     
+class InsulinSchedule(models.Model):
+    insuling_dosage = models.CharField(max_length=50)
+    medicine = models.CharField(max_length=100)
+    scheduled_time = models.DateTimeField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} {}".format(self.user.first_name, self.user.last_name)
