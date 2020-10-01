@@ -12,12 +12,15 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
-import os
+import os, sys, environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+ROOT_DIR = (
+    environ.Path(__file__)-2
+)
+APPS_DIR = ROOT_DIR.path("sdc_backend")
+sys.path.append(str(APPS_DIR))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -35,6 +38,7 @@ THIRD_PARTY_APPS = [
     'phonenumber_field',
 ]
 
+
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,7 +50,7 @@ DJANGO_APPS = [
 ]
 
 LOCAL_APPS = [
-    'sdc_backend.apis'
+    'apis'
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
@@ -133,8 +137,8 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(APPS_DIR, 'staticfiles')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(APPS_DIR, 'static'),
 )

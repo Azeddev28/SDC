@@ -1,7 +1,7 @@
 #Django Apps
 django-phonenumber-field
 djangorestframework
-
+django-environ
 
 
 #Database postgres
