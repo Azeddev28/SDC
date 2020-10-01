@@ -2,7 +2,12 @@
 django-phonenumber-field
 djangorestframework
 django-environ
-
+django-heroku
 
 #Database postgres
 psycopg2-binary
+
+
+
+#THIRD PARTY
+gunicorn
