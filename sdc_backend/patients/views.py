@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .decorators import log_api
+from sdc_backend.sdc.decorators import log_api
 from .constants import GLUCOSE_CHECK_ERROR, GLUCOSE_PREDICTION_ERROR, PROFILE_UPDATION_ERROR 
 from .utils import fetch_glucose_level, predict_glucose_reading
 # Create your views here.
@@ -25,12 +25,4 @@ class PredictGlucoseLevelAPIView(APIView):
         predicted_glucose_level = predict_glucose_reading()
         return Response({
             'predicted_glucose_level': predicted_glucose_level
-        })
-
-
-@method_decorator(log_api(error_msg=PROFILE_UPDATION_ERROR), name='post')
-class ProfileUpdateAPIView(APIView):
-    def post(self, request, *args, **kwargs):
-        return Response({
-            'success_message': "Profile Updated Successfully"
         })

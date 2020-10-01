@@ -51,7 +51,9 @@ DJANGO_APPS = [
 ]
 
 LOCAL_APPS = [
-    'apis'
+    'sdc',
+    'users',
+    'patients'
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
@@ -86,7 +88,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-AUTH_USER_MODEL = 'apis.User'
+AUTH_USER_MODEL = 'users.User'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
