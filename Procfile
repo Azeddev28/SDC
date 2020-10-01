@@ -1,0 +1,1 @@
+web: gunicorn SDC.config.wsgi --log-file -
