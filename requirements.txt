@@ -1,3 +1,8 @@
 #Django Apps
 django-phonenumber-field
 djangorestframework
+
+
+
+#Database postgres
+psycopg2-binary
