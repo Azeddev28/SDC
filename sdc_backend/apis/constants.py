@@ -1,0 +1,1 @@
+GLUCOSE_CHECK_ERROR = "error viewing glucose"
