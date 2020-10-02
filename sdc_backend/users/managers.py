@@ -12,13 +12,12 @@ class CustomUserManager(BaseUserManager):
         """
         if not username:
             raise ValueError(_('The Username must be set'))
-        username = self.normalize_username(username)
         user = self.model(username=username, **extra_fields)
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, username, password, **extra_fields):
+    def create_superuser(self, username, password, email=None, **extra_fields):
         """
         Create and save a SuperUser with the given username and password.
         """

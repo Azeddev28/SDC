@@ -16,6 +16,7 @@ class User(AbstractUser, TimeStampMixin):
     
     objects = CustomUserManager()
     email = None
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
     is_patient = models.BooleanField(
         default=False,
