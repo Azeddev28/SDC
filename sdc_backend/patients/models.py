@@ -15,25 +15,24 @@ class PatientHistory(TimeStampMixin):
 
     
     glucose_level = models.FloatField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='patient_to_pat_hist')
 
     def __str__(self):
-        return "{} {}".format(self.user.first_name, self.user.last_name)
+        return "{} {}".format(self.patient.first_name, self.patient.last_name)
 
 
-class InsulinSchedule(TimeStampMixin):
+class MedicationSchedule(TimeStampMixin):
 
     class Meta:
-        db_table = 'insulin_schedule'
+        db_table = 'medication_schedule'
         ordering = ('-created_at',)
 
-    insuling_dosage = models.CharField(max_length=50)
-    medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
+    medication = models.ForeignKey(Medication, on_delete=models.CASCADE, related_name="medication_to_med_sch")
     scheduled_time = models.DateTimeField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='patient_to_med_sch')
 
     def __str__(self):
-        return "{} {}".format(self.user.first_name, self.user.last_name)
+        return "{} {}".format(self.patient.first_name, self.patient.last_name)
 
 
 class MealPlan(TimeStampMixin):
@@ -44,7 +43,7 @@ class MealPlan(TimeStampMixin):
     
     name = models.CharField(max_length=100)
     scheduled_time = models.DateTimeField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='patient_to_meal_plan')
 
     def __str__(self):
-        return "{} {}".format(self.user.first_name, self.user.last_name)
+        return "{} {}".format(self.patient.first_name, self.patient.last_name)

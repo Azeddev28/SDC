@@ -7,10 +7,10 @@ from rest_framework.response import Response
 
 from sdc_backend.sdc.decorators import log_api
 
-from .models import InsulinSchedule, MealPlan
+from .models import MedicationSchedule, MealPlan
 from .constants import GLUCOSE_CHECK_ERROR, GLUCOSE_PREDICTION_ERROR, PROFILE_UPDATION_ERROR 
 from .utils import fetch_glucose_level, predict_glucose_reading
-from .serializers import InsulinScheduleSerializer
+from .serializers import MedicationScheduleSerializer
 # Create your views here.
 
 
@@ -31,13 +31,13 @@ class PredictGlucoseLevelAPIView(APIView):
             'predicted_glucose_level': predicted_glucose_level
         })
 
-
-class InsulinScheduleListAPIView(ListCreateAPIView):
-    serializer_class = InsulinScheduleSerializer
+@method_decorator(log_api(error_msg=GLUCOSE_PREDICTION_ERROR), name='post')
+class MedicationScheduleListCreateAPIView(ListCreateAPIView):
+    serializer_class = MedicationScheduleSerializer
     
     def get_queryset(self):
         user_id = self.request.user.id
-        insulin_schedule_list = InsulinSchedule.objects.filter(user_id=user_id)
+        insulin_schedule_list = MedicationSchedule.objects.filter(user_id=user_id)
         return insulin_schedule_list
     
     def perform_create(self, serializer):
@@ -50,7 +50,7 @@ class MealPlanListAPIView(ListCreateAPIView):
     
     def get_queryset(self):
         user_id = self.request.user.id
-        insulin_schedule_list = InsulinSchedule.objects.filter(user_id=user_id)
+        insulin_schedule_list = MedicationSchedule.objects.filter(user_id=user_id)
         return insulin_schedule_list
     
     def perform_create(self, serializer):

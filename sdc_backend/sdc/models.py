@@ -19,7 +19,6 @@ class Medication(TimeStampMixin):
         db_table = 'medication'
         ordering = ('-created_at',)
 
-
     name = models.CharField(max_length=100)
     dosage = models.CharField(max_length=100)
 

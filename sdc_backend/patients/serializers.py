@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from users.models import User
 
-from .models import InsulinSchedule, MealPlan
+from .models import MedicationSchedule, MealPlan
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,15 +10,15 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ['created_at', 'updated_at']
 
 
-class InsulinScheduleSerializer(serializers.ModelSerializer):
+class MedicationScheduleSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False)
     
     class Meta:
-        model = InsulinSchedule
+        model = MedicationSchedule
         exclude = ['created_at', 'updated_at']
 
     def create(self, validated_data):
-        return InsulinSchedule.objects.create(**validated_data)
+        return MedicationSchedule.objects.create(**validated_data)
     
     
 class MealPlanSerializer(serializers.ModelSerializer):
