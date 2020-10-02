@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 from sdc.models import TimeStampMixin
+
+from .managers import CustomUserManager
 # Create your models here.
 
 ##ADD TEXT TRANSLATIONS
@@ -11,7 +13,8 @@ class User(AbstractUser, TimeStampMixin):
     class Meta:
         db_table = 'users'
         ordering = ('-created_at',)
-
+    
+    objects = CustomUserManager()
     email = None
     REQUIRED_FIELDS = []
     is_patient = models.BooleanField(
