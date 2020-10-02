@@ -6,6 +6,11 @@ from sdc.models import TimeStampMixin
 
 
 class User(AbstractUser, TimeStampMixin):
+
+    class Meta:
+        db_table = 'users'
+        ordering = ('-created_at',)
+
     is_patient = models.BooleanField()
     is_doctor = models.BooleanField()
     is_caretaker = models.BooleanField()
@@ -15,6 +20,11 @@ class User(AbstractUser, TimeStampMixin):
 
 
 class Profile(TimeStampMixin):
+
+    class Meta:
+        db_table = 'profiles'
+        ordering = ('-created_at',)
+
     dob = models.DateField()
     address = models.CharField(max_length=250, null=True,)
     user = models.OneToOneField(User, on_delete=models.CASCADE)

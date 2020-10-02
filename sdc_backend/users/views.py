@@ -16,3 +16,9 @@ class ProfileUpdateAPIView(APIView):
         return Response({
             'success_message': "Profile Updated Successfully"
         })
+
+#LOGIN API
+# class LoginAPIView(self, request, *args, **kwargs):
+
+#SIGNUP API
+# class SignupAPIView(self, request, *args, **kwargs):
