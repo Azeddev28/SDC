@@ -13,6 +13,7 @@ class User(AbstractUser, TimeStampMixin):
         ordering = ('-created_at',)
 
     email = None
+    REQUIRED_FIELDS = []
     is_patient = models.BooleanField(
         default=False,
         help_text=(
