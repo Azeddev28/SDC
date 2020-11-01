@@ -1,5 +1,8 @@
+from random import uniform
+
+
 def fetch_glucose_level():
-    return '0.00'
+    return uniform(90, 300)
 
 
 def predict_glucose_reading():

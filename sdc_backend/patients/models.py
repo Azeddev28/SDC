@@ -7,7 +7,7 @@ from users.models import User
 # Create your models here.
 
 
-class PatientHistory(TimeStampMixin):
+class GlucoseLevelHistory(TimeStampMixin):
 
     class Meta:
         db_table = 'patient_history'

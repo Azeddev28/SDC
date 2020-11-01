@@ -3,6 +3,7 @@ django-phonenumber-field
 djangorestframework
 django-environ
 django-heroku
+django-rest-knox
 
 #Database postgres
 psycopg2-binary
