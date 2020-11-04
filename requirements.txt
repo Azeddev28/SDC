@@ -4,6 +4,7 @@ djangorestframework
 django-environ
 django-heroku
 django-rest-knox
+django-cors-headers
 
 #Database postgres
 psycopg2-binary
