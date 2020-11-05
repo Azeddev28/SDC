@@ -47,3 +47,8 @@ class MealPlan(TimeStampMixin):
 
     def __str__(self):
         return "{} {}".format(self.patient.first_name, self.patient.last_name)
+
+
+class Patient(TimeStampMixin):
+    weight = models.FloatField()
+    height = models.FloatField()

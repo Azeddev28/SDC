@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Medication
+from .models import Medication, Hospital, HospitalUsers
 # Register your models here.
 
 
@@ -10,3 +10,6 @@ class MedicationAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Medication, MedicationAdmin)
+admin.site.register(Hospital)
+admin.site.register(HospitalUsers)
+

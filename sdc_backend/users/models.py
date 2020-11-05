@@ -3,10 +3,23 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from sdc.models import TimeStampMixin
+from sdc.models import TimeStampMixin, Hospital
 
 from .managers import CustomUserManager
-# Create your models here.
+
+
+
+from enum import IntEnum
+
+class Gender(IntEnum):
+    Male = 1
+    Female = 2
+  
+    @classmethod
+    def choices(cls):
+        return [(key.value, key.name) for key in cls]
+
+
 
 ##ADD TEXT TRANSLATIONS
 
@@ -44,12 +57,13 @@ class User(AbstractUser, TimeStampMixin):
         return "{} {}".format(self.first_name, self.last_name)
 
 
-class Doctor(TimeStampMixin):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_to_doctor')
-    visiting_hours = models.CharField(max_length=20)
 
-    def __str__(self):
-        return "{} {}".format(self.user.first_name, self.user.last_name)
+
+
+
+# class PatientReports(TimeStampMixin):
+
+
 
 
 class Profile(models.Model):
@@ -57,10 +71,12 @@ class Profile(models.Model):
     class Meta:
         db_table = 'profiles'
 
-    dob = models.DateField()
+    dob = models.DateField(null=True)
     address = models.CharField(max_length=250, null=True,)
+    gender = models.IntegerField(choices=Gender.choices(), default=Gender.Male)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_to_profile')
-    
     
     def __str__(self):
         return "{} {}".format(self.user.first_name, self.user.last_name)
+
+

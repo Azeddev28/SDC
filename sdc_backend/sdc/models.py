@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
 
 class TimeStampMixin(models.Model):
 
@@ -26,3 +24,22 @@ class Medication(TimeStampMixin):
         return self.name
 
 
+
+class Hospital(TimeStampMixin):
+    name = models.CharField(max_length=150)
+    address = models.CharField(max_length=350)
+    
+
+
+
+class HospitalUsers(models.Model):
+
+    class Meta:
+        db_table = 'hospital_users'
+
+    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, related_name="hospital_to_hospitalusers")
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="user_to_hospitalusers")
+
+    def __str__(self):
+        return "{}  {} {}".format(self.hospital.first_name, 
+                                     self.user.first_name, self.user.last_name)

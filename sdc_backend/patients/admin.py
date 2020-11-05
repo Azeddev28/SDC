@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import MedicationSchedule, MealPlan, GlucoseLevelHistory
+from .models import MedicationSchedule, MealPlan, GlucoseLevelHistory, Patient
 # Register your models here.
 
 class MedicationScheduleAdmin(admin.ModelAdmin):
@@ -21,5 +21,6 @@ class GlucoseLevelHistoryAdmin(admin.ModelAdmin):
 admin.site.register(MedicationSchedule, MedicationScheduleAdmin)
 admin.site.register(MealPlan, MealPlanAdmin)
 admin.site.register(GlucoseLevelHistory, GlucoseLevelHistoryAdmin)
+admin.site.register(Patient)
 
 

@@ -6,9 +6,19 @@ from django.contrib.auth import authenticate
 User = get_user_model()
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
+  user_type = serializers.SerializerMethodField('get_user_type')
+  
+
+  def get_user_type(self, obj):
+    if obj.is_patient:
+      return 'patient'
+    elif obj.is_doctor:
+      return 'doctor'
+    return ''
+
   class Meta:
     model = User
-    fields = ['username']
+    fields = ['username', 'uuid', 'user_type']
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
