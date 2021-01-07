@@ -55,7 +55,7 @@ DJANGO_APPS = [
 ]
 
 LOCAL_APPS = [
-    'sdc.apps.SdcConfig',
+    'sdc',
     'users',
     'patients',
     'doctors.apps.DoctorsConfig',
