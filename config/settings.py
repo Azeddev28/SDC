@@ -58,7 +58,7 @@ LOCAL_APPS = [
     'sdc',
     'users',
     'patients',
-    'doctors.apps.DoctorsConfig',
+    'doctors',
 
 ]
 
