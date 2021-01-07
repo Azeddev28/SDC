@@ -29,7 +29,7 @@ sys.path.append(str(APPS_DIR))
 SECRET_KEY = 'rg53w9&5!!f+$lv9fn=_5l!1p030p0&-)!85hh2=5(ncu$*y&%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
