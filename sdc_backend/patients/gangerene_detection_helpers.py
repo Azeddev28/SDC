@@ -3,11 +3,9 @@ import pathlib
 import matplotlib
 from datetime import datetime
 import cv2
-import matplotlib.pyplot as plt
 from scipy import misc
 from PIL import Image
 from scipy import ndimage
-import matplotlib.pyplot as plt
 from skimage.measure import label, regionprops
 from scipy.ndimage import morphology, filters
 
@@ -115,8 +113,6 @@ def necrose(img) :
     lower = np.array([0, 30, 10])
     upper = np.array([80, 80, 50])
     skinMask = cv2.inRange(converted, lower, upper)
-    plt.imshow(skinMask)
-    plt.figure()
     # Apply mask to image
     img = cv2.bitwise_and(img, img, mask = skinMask)
     # Return value channel of image
@@ -204,9 +200,6 @@ def detect_gangerene(imageObj):
     
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (20, 20))
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE,kernel,iterations=1)
-    
-    plt.imsave("mask.jpeg",mask)
-    
     #hole filling
     mask = morphology.binary_fill_holes(mask[:,:,1])
     
@@ -215,17 +208,12 @@ def detect_gangerene(imageObj):
     max_index = biggestCC_index(labels)
     
     mask=border(mask,labels,max_index)
-    
-    plt.imsave("mask.jpeg",mask)
-    
     #desired skin for each channel R, G and B
     skin = np.zeros_like(image_rgb)
     bord = image_rgb
     for i in range(0,3):
         skin[:,:,i] = mask * image_rgb[:,:,i]
         bord[:,:,i] = image_rgb[:,:,i] * (mask == 0)
-    
-    plt.imsave("skin.jpg", skin)
     
     skin_bgr = skin[...,::-1]
     
@@ -250,11 +238,5 @@ def detect_gangerene(imageObj):
     cv2.putText(segmented,g,(50,h - 100), font, 3,color,10,cv2.LINE_AA)
     cv2.putText(segmented,f,(50, h - 200), font, 3,color,10,cv2.LINE_AA)
     cv2.putText(segmented,n,(50, h - 300), font, 3,color,10,cv2.LINE_AA)
-
-    #segmented image + original
-    # plt.imshow(segmented)
-    # plt.figure()
-    # plt.show()
-    # plt.imsave("final.jpg", segmented)
     return segmented
 
