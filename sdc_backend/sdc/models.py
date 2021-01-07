@@ -43,3 +43,15 @@ class HospitalUsers(models.Model):
     def __str__(self):
         return "{}  {} {}".format(self.hospital.first_name, 
                                      self.user.first_name, self.user.last_name)
+
+
+
+class Messages(TimeStampMixin):
+    class Meta:
+        db_table = 'messages'
+        ordering = ('-created_at',)
+
+    message = models.TextField()
+    sender = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="sender_to_messages")
+    receiver = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="receiver_to_messages")
+    

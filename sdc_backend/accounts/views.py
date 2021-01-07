@@ -1,7 +1,9 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .serializers import (UserSerializer, PatientLoginSerializer ,RegisterSerializer, 
+                         LoginSerializer, DoctorLoginSerializer)
+from rest_framework import status
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -28,10 +30,23 @@ class LoginAPI(generics.GenericAPIView):
     serializer.is_valid(raise_exception=True)
     user = serializer.validated_data 
     token = AuthToken.objects.create(user)[1]
-    return Response({
-      "user": UserSerializer(user, context=self.get_serializer_context()).data,
-      "token": token
+    user_data = None
+    context = {}
+    if user.is_patient:
+      user_data = PatientLoginSerializer(user, context=self.get_serializer_context()).data
+
+    elif user.is_doctor:
+      user_data = DoctorLoginSerializer(user, context=self.get_serializer_context()).data
+
+    else:
+      user_data = UserSerializer(user, context=self.get_serializer_context()).data
+   
+    context.update({
+      "user": user_data,
+      "token": token,
+      "message": "User Logged In Successfully!"
     })
+    return Response(context, status=status.HTTP_200_OK)
 
 # Get User API
 class UserAPI(generics.RetrieveAPIView):

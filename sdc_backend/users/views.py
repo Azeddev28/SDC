@@ -54,3 +54,12 @@ def registration(request):
         "access": str(refresh.access_token),
     }
     return response.Response(res, status.HTTP_201_CREATED)
+
+
+class GetUserAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        user_uuid = self.kwargs['uuid']
+        user = User.objects.get(uuid=user_uuid)
+        return response.Response({
+            'user_name': "{} {}".format(user.first_name, user.last_name)
+        })

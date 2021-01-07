@@ -7,17 +7,18 @@ from sdc.models import TimeStampMixin, Hospital
 
 from .managers import CustomUserManager
 
+from phonenumber_field.modelfields import PhoneNumberField
 
+from django.core.validators import RegexValidator
+# from enum import IntEnum
 
-from enum import IntEnum
-
-class Gender(IntEnum):
-    Male = 1
-    Female = 2
+# class Gender(IntEnum):
+#     Male = 1
+#     Female = 2
   
-    @classmethod
-    def choices(cls):
-        return [(key.value, key.name) for key in cls]
+#     @classmethod
+#     def choices(cls):
+#         return [(key.value, key.name) for key in cls]
 
 
 
@@ -68,14 +69,20 @@ class User(AbstractUser, TimeStampMixin):
 
 class Profile(models.Model):
 
+    class Gender(models.TextChoices):
+        MALE = "1"
+        FEMALE = "2"
+
     class Meta:
         db_table = 'profiles'
 
     dob = models.DateField(null=True)
     address = models.CharField(max_length=250, null=True,)
-    gender = models.IntegerField(choices=Gender.choices(), default=Gender.Male)
+    gender = models.CharField(choices=Gender.choices, max_length=2, default=Gender.MALE)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_to_profile')
-    
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phone_no = PhoneNumberField(validators=[phone_regex])
+
     def __str__(self):
         return "{} {}".format(self.user.first_name, self.user.last_name)
 

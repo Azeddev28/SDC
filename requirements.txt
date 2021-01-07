@@ -1,11 +1,21 @@
 #Django Apps
-django-phonenumber-field
+django-phonenumber-field[phonenumbers]
 djangorestframework
 django-environ
 django-heroku
 django-rest-knox
 django-cors-headers
 django-cors-middleware
+channels
+channels_redis
+
+#python libraries
+matplotlib
+numpy
+opencv-python
+scipy
+scikit-image
+Pillow
 
 #Database postgres
 psycopg2-binary

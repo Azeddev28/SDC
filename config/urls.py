@@ -21,7 +21,9 @@ urlpatterns = [
     path('patient/', include("patients.urls")),
     path('user/', include("users.urls")),
     path('doctor/', include("doctors.urls")),
-    path('accounts/', include("accounts.urls"))
+    path('accounts/', include("accounts.urls")),
+    path('chat/', include("channel_apps.chat.urls")),
+
 ]
 
 

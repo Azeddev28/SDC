@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 
 import os, sys, environ, django_heroku, dj_database_url
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ sys.path.append(str(APPS_DIR))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SDC_SECRET_KEY', default=None)
+SECRET_KEY = 'rg53w9&5!!f+$lv9fn=_5l!1p030p0&-)!85hh2=5(ncu$*y&%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -50,16 +51,27 @@ DJANGO_APPS = [
     'knox',
     'accounts',
     'corsheaders',
+    'channels',
 ]
 
 LOCAL_APPS = [
-    'sdc',
+    'sdc.apps.SdcConfig',
     'users',
     'patients',
-    'doctors'
+    'doctors.apps.DoctorsConfig',
+
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
+
+CHANNEL_LAYERS = {
+    'default': {
+    'BACKEND': 'channels_redis.core.RedisChannelLayer',
+    'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,12 +87,12 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = True # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:4200',
-] # If this is used, then not need to use `CORS_ORIGIN_ALLOW_ALL = True`
-CORS_ORIGIN_REGEX_WHITELIST = [
-    'http://localhost:4200',
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:4200',
+# ] # If this is used, then not need to use `CORS_ORIGIN_ALLOW_ALL = True`
+# CORS_ORIGIN_REGEX_WHITELIST = [
+#     'http://localhost:4200',
+# ]
 
 ROOT_URLCONF = 'config.urls'
 
@@ -117,7 +129,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -164,6 +175,7 @@ REST_FRAMEWORK = {
     ]
 }
 
+REST_KNOX = {'TOKEN_TTL': timedelta(hours=100)}
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(APPS_DIR, 'staticfiles')
@@ -171,5 +183,7 @@ STATIC_ROOT = os.path.join(APPS_DIR, 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(APPS_DIR, 'static'),
 )
+
+ASGI_APPLICATION = "config.routing.application"
 
 django_heroku.settings(locals())
