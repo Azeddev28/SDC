@@ -5,4 +5,4 @@ class SdcConfig(AppConfig):
     name = 'sdc'
 
     def ready(self): #method just to import the signals
-    	import sdc.signals
+    	import sdc_backend.sdc.signals
